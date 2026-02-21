@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { register } = require('../controllers/authController');
+const { register, login } = require('../controllers/authController'); // login যোগ করো
 
-// রেজিস্ট্রেশন রুট: POST /api/auth/register
 router.post('/register', register);
+router.post('/login', login); // নতুন লগইন রুট
 
 module.exports = router;
