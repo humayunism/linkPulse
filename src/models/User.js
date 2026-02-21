@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs'); // নতুন ইমপোর্ট
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -8,17 +9,13 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, 'Please add an email'],
-    unique: true, // একই ইমেইল দিয়ে দুইবার একাউন্ট খোলা যাবে না
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      'Please add a valid email',
-    ],
+    unique: true,
   },
   password: {
     type: String,
     required: [true, 'Please add a password'],
     minlength: 6,
-    select: false, // ডাটাবেস থেকে ইউজার কল করলে পাসওয়ার্ড যেন অটোমেটিক না আসে (নিরাপত্তার জন্য)
+    select: false, 
   },
   username: {
     type: String,
@@ -29,6 +26,15 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+// এই অংশটুকু নতুন যোগ করছো (সেভ করার আগে পাসওয়ার্ড এনক্রিপ্ট হবে)
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    return next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
 module.exports = mongoose.model('User', UserSchema);
