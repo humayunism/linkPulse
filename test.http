@@ -1,19 +1,35 @@
-### Register a User
-POST http://localhost:3000/api/auth/register
+### ১. রেজিস্ট্রেশন (Register)
+POST http://127.0.0.1:3000/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "Humayun",
-  "email": "test@example.com",
-  "username": "test",
-  "password": "password123"
+  "name": "Humayuna Kabir",
+  "email": "humayun_test_2@example.com",
+  "username": "humayun_test_2",
+  "password": "paassword123"
 }
 
-### Login a User
-POST http://localhost:3000/api/auth/login
+### ২. লগইন (Login)
+# লগইন করার পর যে টোকেনটি পাবে, সেটি নিচের ৩ নম্বর রিকোয়েস্টে পেস্ট করবে
+POST http://127.0.0.1:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
-  "password": "password123"
+  "email": "humayun_test_2@example.com",
+  "password": "paassword123"
 }
+
+### ৩. লিঙ্ক তৈরি করা (Create Link - Protected)
+# Authorization এ 'Bearer ' এর পর তোমার টোকেনটি বসাও
+POST http://127.0.0.1:3000/api/links
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5OWNjMWI4N2ZlNTIxM2RkMWFkODIzNCIsImlhdCI6MTc3MTg4MzcyMiwiZXhwIjoxNzc0NDc1NzIyfQ.MFDepjCSz_aiDpBA3Mi25gdkH2BhfYAqMZcs8mzd_HM
+
+{
+  "platform": "GitHub",
+  "url": "https://github.com/humayun-kabir"
+}
+### Get All My Links
+GET http://127.0.0.1:3000/api/links
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5OWNjMWI4N2ZlNTIxM2RkMWFkODIzNCIsImlhdCI6MTc3MTg4MzcyMiwiZXhwIjoxNzc0NDc1NzIyfQ.MFDepjCSz_aiDpBA3Mi25gdkH2BhfYAqMZcs8mzd_HM
+
