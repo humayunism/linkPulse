@@ -200,23 +200,4 @@ exports.trackClick = async (req, res) => {
   }
 };
 
-// @desc    Get all user links
-// @route   GET /api/links
-// @access  Private
-exports.getLinks = async (req, res) => {
-  try {
-    // শুধুমাত্র এই ইউজারের লিঙ্কগুলো খুঁজে বের করবে
-    const links = await Link.find({ user: req.user.id });
 
-    res.status(200).json({
-      success: true,
-      count: links.length,
-      data: links
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
-  }
-};
